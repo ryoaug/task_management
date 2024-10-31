@@ -20,8 +20,9 @@
                         <div class="col-lg-4">
                             <div class="card bg-light text-center my-3 shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title">{{ task.title }}</h4>
-                                    <p class="card-text">期限: {{ task.due_date }}</p>
+                                    <h3 class="card-title">{{ task.title }}</h3>
+                                    <h5 class="card-text">期限: {{ task.due_date }}</h5>
+                                    <h6 class="card-text">{{ task.category }}</h6>
                                     <p class="card-text">{{ task.details }}</p>
                                     <form  action="{{url_for('uncomplete_task')}}" method="post">
                                         <input type="hidden" name="task_id" value="{{ task.id }}">

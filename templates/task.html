@@ -33,8 +33,9 @@
                             <div class="col-lg-4">
                                 <div class="card bg-light text-center my-3 shadow">
                                     <div class="card-body">
-                                        <h4 class="card-title">{{ task.title }}</h4>
-                                        <p class="card-text">期限: {{ task.due_date }}</p>
+                                        <h3 class="card-title">{{ task.title }}</h3>
+                                        <h5 class="card-text">期限: {{ task.due_date }}</h5>
+                                        <h6 class="card-text">{{ task.category }}</h6>
                                         <p class="card-text">{{ task.details }}</p>
                                         <form action="{{ url_for('complete_task') }}" method="post">
                                             <input type="hidden" name="task_id" value="{{ task.id }}">
@@ -80,8 +81,12 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">カテゴリー</label>
                             <select class="form-select" id="category" name="category">
-                                <option value="仕事">仕事</option>
+                                <option value="仕事">課題</option>
                                 <option value="趣味">趣味</option>
+                                <option value="趣味">仕事</option>
+                                <option value="趣味">健康</option>
+                                <option value="趣味">買い物</option>
+                                <option value="趣味">学習</option>
                                 <option value="その他">その他</option>
                             </select>
                         </div>
