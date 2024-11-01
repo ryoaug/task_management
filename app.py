@@ -126,16 +126,19 @@ def task():
     return render_template('/task.html', tasks=user_tasks)
 
 
-@app.route('/completed')
+@app.route('/completed', methods=['GET'])
 def completed():
-    completed_tasks = Task.query.filter_by(is_completed=True).all()
+    # if 'user_id' not in session:
+    #     return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+    completed_tasks = Task.query.filter_by(user_id=user_id, is_completed=True).all()
     return render_template('completed.html', tasks=completed_tasks)
 
 @app.route('/add_task', methods=['POST'])
 def add_task():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-
     user_id = session['user_id']
     title = request.form.get('title')
     due_date_str = request.form.get('due_date')
