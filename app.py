@@ -87,7 +87,6 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -111,8 +110,6 @@ def register():
 
     error_username = form.username.errors[0] if form.username.errors else None
     return render_template('/register.html', form=form, error_username=error_username, error_password=error_password)
-
-
 
 
 @app.route('/task', methods=['GET'])
