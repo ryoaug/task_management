@@ -13,7 +13,17 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+import os
+
+# RenderでのSQLiteデータベースパス設定
+if os.getenv('RENDER') == 'TRUE':
+    # Render上ではSQLiteデータベースを特定のパスに配置
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/data.sqlite'
+else:
+    # ローカル環境では現在のディレクトリにデータベースを保存
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate(app, db)
@@ -93,19 +103,18 @@ def register():
     error_password = None
 
     if form.validate_on_submit():
-        print("Form is valid!")
-        
         username = form.username.data
         password = form.password.data
         pass_confirm = form.pass_confirm.data
 
         if password != pass_confirm:
             error_password = 'パスワードが一致しません'
-            print("Error: Passwords do not match.")
+            print(error_password)
         else:
             new_user = User(username=username, password=password)
             db.session.add(new_user)
             db.session.commit()
+            # print("コミット")
             return redirect(url_for('login'))
 
     error_username = form.username.errors[0] if form.username.errors else None
