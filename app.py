@@ -14,15 +14,13 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-import os
-
 # RenderでのSQLiteデータベースパス設定
 if os.getenv('RENDER') == 'TRUE':
     # Render上ではSQLiteデータベースを特定のパスに配置
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/data.sqlite'
 else:
     # ローカル環境では現在のディレクトリにデータベースを保存
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data', 'data.sqlite')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
